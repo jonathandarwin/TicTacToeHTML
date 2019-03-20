@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<link href="style.css" rel="stylesheet">
+</head>
+<body>
+
+<table border="1" cellspacing="2" cellpadding="30">
+	<tr>
+		<td class="room row1 col1 d1"></td>
+		<td class="room row1 col2"></td>
+		<td class="room row1 col3 d2"></td>		
+	</tr>
+
+	<tr>
+		<td class="room row2 col1"></td>
+		<td class="room row2 col2 d1 d2"></td>
+		<td class="room row2 col3"></td>
+	</tr>
+
+	<tr>
+		<td class="room row3 col1 d2"></td>
+		<td class="room row3 col2"></td>
+		<td class="room row3 col3 d1"></td>
+	</tr>
+</table>
+
+<div class="showMessage"></div>
+
+</body>
+</html>
+
+<script>
+
+	function check()
+	{
+		for (var i=1; i<=3; i++){
+			var counterRed = 0;
+			var counterBlue = 0;
+			$('.row'+i).each(function(){
+				if($(this).hasClass('filled') && $(this).hasClass('blue')){
+					counterBlue++;
+				}else if($(this).hasClass('filled') && $(this).hasClass('red')){
+					counterRed++;					
+				}
+			});
+
+			if(counterBlue == 3){
+				$('.showMessage').text('BLUE WIN');						
+				break;
+			}else if(counterRed == 3){
+				$('.showMessage').text('RED WIN');							
+				break;
+			}
+
+			var counterRed = 0;
+			var counterBlue = 0;
+			$('.col'+i).each(function(){
+				if($(this).hasClass('filled') && $(this).hasClass('blue')){
+					counterBlue++;
+				}else if($(this).hasClass('filled') && $(this).hasClass('red')){
+					counterRed++;					
+				}
+			});
+			if(counterBlue == 3){
+				$('.showMessage').text('BLUE WIN');				
+				break;
+			}else if(counterRed == 3){
+				$('.showMessage').text('RED WIN');
+				break;
+			}		
+		}// END OF FOR
+
+
+
+		for (var i=1; i<=2; i++){
+			var counterRed = 0;
+			var counterBlue = 0;
+			$('.d'+i).each(function(){
+				if($(this).hasClass('filled') && $(this).hasClass('blue')){
+					counterBlue++;
+				}else if($(this).hasClass('filled') && $(this).hasClass('red')){
+					counterRed++;					
+				}
+			});
+			if(counterBlue == 3){
+				$('.showMessage').text('BLUE WIN');
+				break;
+			}else if(counterRed == 3){
+				$('.showMessage').text('RED WIN');
+				break;
+			}	
+
+		}// END OF FOR 
+
+
+		if($('.showMessage').text() == 'BLUE WIN'){								
+			
+		}else if ($('.showMessage').text() == 'RED WIN'){									
+
+		}
+		
+	}// END OF FUNCTION CHECK
+
+
+	$(document).ready(function(){
+		var blue = true;
+		var red = false;				
+
+		$('.room').hover(function(){	
+			var ini = $(this);
+			if(!$(this).hasClass('filled') && $('.showMessage').text() == ""){
+				if(red == true){
+					ini.toggleClass('red');
+				}else{
+					ini.toggleClass('blue');
+				}		
+			}
+					
+		});
+
+		$('.room').click(function(){
+			var ini = $(this);			
+			if ($('.showMessage').text() == ""){
+				if(red == true){
+					ini.addClass('red');
+					ini.addClass('filled');
+					red = false;
+					blue = true;
+				}else{
+					ini.addClass('blue');	
+					ini.addClass('filled');
+					red = true;
+					blue = false;
+				}
+				
+				check();
+			}// END OF IF FINISH == false			
+			
+		});
+
+	});
+</script>
+
